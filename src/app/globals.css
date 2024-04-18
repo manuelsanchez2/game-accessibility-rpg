@@ -2,42 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+canvas {
+  display: initial;
+  vertical-align: top;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --game-viewport-width: 180px;
+  --game-viewport-height: 180px;
+  --game-cell-size: 16px;
+  --pixel-size: 1;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
+html,
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  justify-content: center;
-  align-items: center;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
 }
 
 canvas {
-  max-width: 100%;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Scale up game art if we can fit it. 2x */
+@media (min-width: 360px) {
+  :root {
+    --pixel-size: 2;
+  }
+}
+/* 3x */
+@media (min-width: 540px) {
+  :root {
+    --pixel-size: 3;
+  }
+}
+/* 4x */
+@media (min-width: 720px) {
+  :root {
+    --pixel-size: 3.5;
+  }
+}
+/* 5x */
+@media (min-width: 900px) {
+  :root {
+    --pixel-size: 3.5;
+  }
+}
+/* 6x */
+@media (min-width: 1080px) {
+  :root {
+    --pixel-size: 3.5;
+  }
+}
+/* 7x */
+@media (min-width: 1260px) {
+  :root {
+    --pixel-size: 4;
+  }
+}
+
+kbd {
+  background-color: #eee;
+  border-radius: 3px;
+  border: 1px solid #b4b4b4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
+    0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+  color: #333;
+  display: inline-block;
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+
+.border-pixel {
+  --size: 3px;
+  --sizeNeg: -3px;
+  box-shadow: var(--sizeNeg) 0 0 0 black, var(--size) 0 0 0 black,
+    0 var(--sizeNeg) 0 0 black, 0 var(--size) 0 0 black;
 }

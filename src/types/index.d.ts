@@ -1,96 +1,57 @@
-export type Property = {
-  name: string
-  type: string
-  value: boolean
-}
+import { GameLoop } from '@/classes/GameLoop'
 
-export type InitialTileset = {
-  columns: number
-  firstgid: number
-  image: string // URL to the image file
-  imageheight: number
-  imagewidth: number
-  margin: number
-  name: string
-  spacing: number
-  tilecount: number
-  tileheight: number
-  tilewidth: number
-}
-
-export type LoadedTileset = {
-  columns: number
-  firstgid: number
-  image: HTMLImageElement // Loaded image element
-  imageheight: number
-  imagewidth: number
-  margin: number
-  name: string
-  spacing: number
-  tilecount: number
-  tileheight: number
-  tilewidth: number
-}
-
-export type ObjectDetail = {
-  ellipse?: boolean
-  height: number
+export type PlacementProps = {
   id: number
-  name: string
-  point?: boolean
-  rotation: number
+  x: number
+  y: number
+  frameCoord?: string
   type?: string
-  visible: boolean
-  width: number
+}
+
+type LevelProps = {
+  theme: string
+  tilesWidth: number
+  tilesHeight: number
+  placements: PlacementProps[]
+  heroRef: any
+  getState: any
+  cameraTransformX?: number
+  cameraTransformY?: number
+  gameLoop: GameLoop
+} | null
+
+export type LevelBackgroundTilesLayerProps = {
+  level: LevelProps
+}
+
+export type SpriteProps = {
+  frameCoord: string
+  size?: number
+  alternativeSpriteSheetImage?: HTMLImageElement | CanvasImageSource | null
+  cropWidth?: number
+  cropHeight?: number
+}
+
+export type MapCellProps = {
+  frameCoord: string
   x: number
   y: number
-  properties?: Property[]
 }
 
-export type BaseLayer = {
-  id: number
-  name: string
-  opacity: number
-  type: string
-  visible: boolean
+export type Coordinate = `${number}x${number}`
+
+export type PlacementPropertiesProps = {
+  id?: number // This is added by the PlacementFactory
   x: number
   y: number
-}
+  frameCoord?: Coordinate
+  type: PlacementTypes
+  direction?: DirectionProps
+  corner?: any
+  isRaised?: boolean
 
-export type TileLayer = BaseLayer & {
-  type: 'tilelayer'
-  data: number[]
-  height: number
-  width: number
-  offsetx?: number
-  offsety?: number
-}
-
-export type ObjectGroupLayer = BaseLayer & {
-  type: 'objectgroup'
-  objects: ObjectDetail[]
-  draworder?: string
-  color?: string
-  tintcolor?: string
-  // No height or width as these are not required for object groups
-}
-
-export type Layer = TileLayer | ObjectGroupLayer
-
-export type MapData = {
-  compressionlevel: number
-  height: number
-  infinite: boolean
-  layers: Layer[]
-  nextlayerid: number
-  nextobjectid: number
-  orientation: string
-  renderorder: string
-  tiledversion: string
-  tileheight: number
-  tilesets: InitialTileset[] // Use InitialTileset here
-  tilewidth: number
-  type: string
-  version: string
-  width: number
+  canCollectItems?: boolean
+  canCompleteLevel?: boolean
+  turnsAroundAtWater?: boolean
+  interactsWithGround?: boolean
 }
