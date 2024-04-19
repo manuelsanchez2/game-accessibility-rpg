@@ -1,5 +1,6 @@
 import {
   CELL_SIZE,
+  DIRECTION_DOWN,
   DIRECTION_LEFT,
   DIRECTION_RIGHT,
   DIRECTION_UP,
@@ -25,7 +26,7 @@ export class Placement {
 
     this.travelPixelsPerFrame = 1.5
     this.movingPixelsRemaining = 0
-    this.movingPixelDirection = DIRECTION_RIGHT
+    this.movingPixelDirection = DIRECTION_DOWN
   }
 
   renderComponent() {}

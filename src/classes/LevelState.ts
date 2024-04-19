@@ -25,7 +25,7 @@ export class LevelState {
   constructor(
     levelId: string,
     onEmit: EmitHandler,
-    theme: ThemeType = LEVEL_THEMES.BLUE,
+    theme: ThemeType = LEVEL_THEMES.GREEN,
     tilesWidth: number = 12,
     tilesHeight: number = 8
   ) {
@@ -49,7 +49,7 @@ export class LevelState {
     // this.tilesWidth = 8
     // this.tilesHeight = 8
     this.placements = [
-      { id: 0, x: 2, y: 2, type: PLACEMENT_TYPE_HERO },
+      { id: 0, x: 6, y: 4, type: PLACEMENT_TYPE_HERO },
       // { id: 1, x: 6, y: 5, type: PLACEMENT_TYPE_GOAL },
     ].map((config) => {
       // This here is where we receive the new instance of the placement with the level inside
@@ -93,6 +93,15 @@ export class LevelState {
     this.onEmit(this.getState())
   }
 
+  public isPositionOutOfBounds(x: number, y: number): boolean {
+    return (
+      x === 0 ||
+      y === 0 ||
+      x >= this.tilesWidth + 1 ||
+      y >= this.tilesHeight + 1
+    )
+  }
+
   public getState(): any {
     return {
       theme: this.theme,
@@ -103,6 +112,7 @@ export class LevelState {
       cameraTransformY: this?.camera?.transformY ?? 0,
       heroRef: this.heroRef,
       gameLoop: this.gameLoop,
+      isPositionOutOfBounds: this.isPositionOutOfBounds,
     }
   }
 

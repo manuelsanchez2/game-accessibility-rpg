@@ -28,7 +28,7 @@ const SettingsModal = ({ level }: { level: LevelProps }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [isOpen, close])
+  }, [isOpen, close, level?.gameLoop])
 
   if (!isOpen) {
     return null
@@ -40,7 +40,7 @@ const SettingsModal = ({ level }: { level: LevelProps }) => {
       <div
         ref={modalRef}
         id="modal-settings"
-        className="absolute max-h-[80vh] md:max-h-[50vh] scroll-y-auto overflow-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 border-pixel"
+        className="absolute max-h-[80vh] md:max-h-[50vh] scroll-y-auto overflow-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black p-6 border-pixel"
       >
         <div className="flex justify-end">
           <button

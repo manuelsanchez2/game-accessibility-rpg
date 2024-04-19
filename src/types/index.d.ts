@@ -18,6 +18,7 @@ type LevelProps = {
   cameraTransformX?: number
   cameraTransformY?: number
   gameLoop: GameLoop
+  isPositionOutOfBounds: (x: number, y: number) => boolean
 } | null
 
 export type LevelBackgroundTilesLayerProps = {
@@ -54,4 +55,31 @@ export type PlacementPropertiesProps = {
   canCompleteLevel?: boolean
   turnsAroundAtWater?: boolean
   interactsWithGround?: boolean
+}
+
+export interface PlacementWithSpecificPropsAndMethods
+  extends PlacementPropertiesProps,
+    LevelProps {
+  travelPixelsPerFrame: number
+  movingPixelsRemaining: number
+  movingPixelDirection: DirectionProps
+  spriteFacingDirection: DirectionProps
+  spriteWalkFrame: number
+  hasBeenCollected: boolean
+
+  changesHeroSkinOnCollide: () => void
+  damagesBodyOnCollide: (body: PlacementPropertiesProps) => boolean
+  canBeDeleted: () => boolean
+  tick: () => void
+  displayXY: () => [number, number]
+  displayMovingXY: () => [number, number]
+  canBeUnlocked: () => boolean
+  isSolidForCollider: (body: PlacementPropertiesProps) => boolean
+  addsItemToInventoryOnCollide: (
+    body: PlacementPropertiesProps
+  ) => null | string
+  zIndex: () => number
+  collect: () => void
+  renderComponent: () => JSX.Element
+  completeLevelOnCollide: () => boolean
 }
