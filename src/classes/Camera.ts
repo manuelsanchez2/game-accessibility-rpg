@@ -5,11 +5,12 @@ import {
   DIRECTION_RIGHT,
   DIRECTION_UP,
 } from '@/constants'
+import { hasReducedMotion } from '@/helpers'
 import { LevelProps } from '@/types'
 
-const CAMERA_SPEED = 0.02
+const CAMERA_SPEED = hasReducedMotion ? 0.01 : 0.03
+const USE_SMOOTH_CAMERA = !hasReducedMotion
 const CAMERA_LOOKAHEAD = 3
-const USE_SMOOTH_CAMERA = true
 
 export class Camera {
   level: LevelProps
@@ -18,7 +19,6 @@ export class Camera {
   transformOffset: number
   constructor(level: LevelProps) {
     this.level = level
-    console.log('level', level)
     const [heroX, heroY] = this.level?.heroRef.displayXY()
     this.cameraX = heroX
     this.cameraY = heroY

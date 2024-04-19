@@ -1,8 +1,30 @@
 'use client'
 
 import { useSettingsModal } from '@/store/use-settings-modal'
+import {
+  useSettingsAudioStore,
+  useSettingsDisplayStore,
+  useSettingsMotionStore,
+} from '@/store/use-settings-store'
 import { LevelProps } from '@/types'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import RangeInput from '../inputs/RangeInput'
+import ColorInput from '../inputs/ColorInput'
+import CheckboxInput from '../inputs/CheckboxInput'
+
+enum SETTINGS {
+  DISPLAY = 'DISPLAY',
+  AUDIO = 'AUDIO',
+  MOTION = 'MOTION',
+}
+
+function resetAllSettings() {
+  if (!confirm('Are you sure you want to reset all settings?')) return
+
+  useSettingsAudioStore.getState().resetAudioSettings()
+  useSettingsDisplayStore.getState().resetDisplaySettings()
+  useSettingsMotionStore.getState().resetMotionSettings()
+}
 
 const SettingsModal = ({ level }: { level: LevelProps }) => {
   const { isOpen, close } = useSettingsModal()
@@ -34,6 +56,35 @@ const SettingsModal = ({ level }: { level: LevelProps }) => {
     return null
   }
 
+  return <SettingsContent modalRef={modalRef} close={close} level={level} />
+}
+
+export default SettingsModal
+
+const SettingsContent = ({
+  modalRef,
+  close,
+  level,
+}: {
+  modalRef: React.RefObject<HTMLDivElement>
+  close: () => void
+  level: LevelProps
+}) => {
+  const [settingsShown, setSettingsShown] = useState(SETTINGS.DISPLAY)
+
+  const settingsOptions = Object.values(SETTINGS).map((setting) => (
+    <li key={setting}>
+      <button
+        onClick={() => setSettingsShown(setting)}
+        className={`font-pressStart2P ${
+          settingsShown === setting ? 'text-black font-bold' : 'text-gray-400'
+        }`}
+      >
+        {setting.charAt(0) + setting.slice(1).toLowerCase()}
+      </button>
+    </li>
+  ))
+
   return (
     <div className="fixed w-full inset-0 z-10">
       <div className="bg-black/25 absolute inset-0 w-full h-full"></div>
@@ -42,37 +93,152 @@ const SettingsModal = ({ level }: { level: LevelProps }) => {
         id="modal-settings"
         className="absolute max-h-[80vh] md:max-h-[50vh] scroll-y-auto overflow-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black p-6 border-pixel"
       >
-        <div className="flex justify-end">
+        {/* Close button */}
+        <div className="flex items-center justify-end">
           <button
-            className="text-2xl"
+            className="text-lg border-pixel px-3 bg-gray-200 hover:bg-gray-300 focus:bg-gray-300"
             onClick={() => {
               level?.gameLoop.restart()
               close()
             }}
           >
-            X
+            x
           </button>
         </div>
-        <div>
-          <div className="text-center font-bold text-2xl mb-12">Settings</div>
-          TO BE DETERMINED HERE heheh
-          <p className="mb-4">
-            Good luck, and if you find anything weird, you can let me know{' '}
-            <a
-              className="underline"
-              title="Open Github Issues on new tab"
-              rel="nofollow noopener"
-              target="_blank"
-              href="mailto:manusansan22@gmail.com"
+
+        <div className="text-center font-bold text-2xl mb-12 font-pressStart2P">
+          Settings
+        </div>
+
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-12 md:gap-32 md:min-w-[500px]">
+          {/* Whole Body of Settings */}
+          <nav
+            className="flex flex-col-reverse md:flex-col md:gap-10 items-center md:items-start h-full justify-between min-h-[150px] md:min-h-[250px]"
+            aria-label="List of all settings"
+          >
+            <ul>{settingsOptions}</ul>
+
+            <button
+              onClick={() => resetAllSettings()}
+              className="text-xs font-pressStart2P bg-red-400 p-2 border-pixel text-nowrap"
             >
-              here
-            </a>
-            .
-          </p>
+              Reset All Settings
+            </button>
+          </nav>
+
+          {/* Conditional Rendering  */}
+          <div>
+            {settingsShown === SETTINGS.DISPLAY && <SettingsDisplay />}
+            {settingsShown === SETTINGS.AUDIO && <SettingsAudio />}
+            {settingsShown === SETTINGS.MOTION && <SettingsMotion />}
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default SettingsModal
+const SettingsDisplay = () => {
+  const {
+    textSize,
+    textColor,
+    setTextSize,
+    setTextColor,
+    hudColorBg,
+    setHudColorBg,
+  } = useSettingsDisplayStore((state) => ({
+    textSize: state.textSize,
+    textColor: state.textColor,
+    setTextSize: state.setTextSize,
+    setTextColor: state.setTextColor,
+    hudColorBg: state.hudColorBg,
+    setHudColorBg: state.setHudColorBg,
+  }))
+
+  return (
+    <>
+      <RangeInput
+        id="text-size"
+        label="Text Size"
+        value={textSize}
+        onChange={(e) => setTextSize(+e.target.value)}
+        min={1}
+        max={5}
+        step={1}
+      />
+      <ColorInput
+        id="text-color"
+        label="Text Color"
+        value={textColor}
+        onChange={(e) => setTextColor(e.target.value)}
+      />
+      <ColorInput
+        id="hud-color-bg"
+        label="HUD Color BG"
+        value={hudColorBg}
+        onChange={(e) => setHudColorBg(e.target.value)}
+      />
+    </>
+  )
+}
+
+const SettingsAudio = () => {
+  const { volumeMusic, setVolumeMusic, volumeEffects, setVolumeEffects } =
+    useSettingsAudioStore((state) => ({
+      volumeMusic: state.volumeMusic,
+      setVolumeMusic: state.setVolumeMusic,
+      volumeEffects: state.volumeEffects,
+      setVolumeEffects: state.setVolumeEffects,
+    }))
+
+  return (
+    <>
+      <p className="font-pressStart2P mb-4 text-xs text-red-500">
+        This is not working yet, working on it!
+      </p>
+
+      <RangeInput
+        id="volume-music"
+        label="Volume Music"
+        value={volumeMusic}
+        onChange={(e) => setVolumeMusic(+e.target.value)}
+        min={1}
+        max={100}
+        step={1}
+      />
+      <RangeInput
+        id="sfx-music"
+        label="Volume SFX"
+        value={volumeEffects}
+        onChange={(e) => setVolumeEffects(+e.target.value)}
+        min={1}
+        max={100}
+        step={1}
+      />
+    </>
+  )
+}
+
+const SettingsMotion = () => {
+  const { reducedMotion, setReducedMotion } = useSettingsMotionStore(
+    (state) => ({
+      reducedMotion: state.reducedMotion,
+      setReducedMotion: state.setReducedMotion,
+    })
+  )
+
+  return (
+    <>
+      <p className="font-pressStart2P mb-4 text-xs text-red-500">
+        This is not working yet, working on it!
+      </p>
+
+      <CheckboxInput
+        id="motion-reduced"
+        label="Motion Reduced?"
+        checked={reducedMotion}
+        onChange={setReducedMotion}
+      />
+    </>
+  )
+}

@@ -98,3 +98,9 @@ kbd {
   box-shadow: var(--sizeNeg) 0 0 0 black, var(--size) 0 0 0 black,
     0 var(--sizeNeg) 0 0 black, 0 var(--size) 0 0 black;
 }
+
+@layer components {
+  input[type='range'] {
+    @apply border-pixel [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-[13px] [&::-webkit-slider-thumb]:w-[7px] [&::-webkit-slider-thumb]:bg-black [&::-webkit-slider-thumb]:rounded-full;
+  }
+}

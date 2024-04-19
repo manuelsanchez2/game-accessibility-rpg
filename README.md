@@ -6,7 +6,7 @@
 
 # Game Accessibility: Some Of My Practical Learnings
 
-Check out the live version [here](...)
+Check out the live version [here](https://game-accessibility-rpg.vercel.app/)
 
 </div>
 

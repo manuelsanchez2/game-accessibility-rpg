@@ -4,6 +4,13 @@ import { useEffect } from 'react'
 import { useSpriteStore } from '@/store/use-sprite-store'
 import { SPRITE_SHEET_CHARACTER, SPRITE_SHEET_SRC } from '@/constants'
 import RenderLevel from '@/components/level-layout/RenderLevel'
+import musicManager from '@/classes/Music'
+import soundsManager from '@/classes/Sounds'
+
+soundsManager.init()
+musicManager.init()
+
+musicManager.playMusic('AMBIENT')
 
 export default function Home() {
   const spriteSheetImage = useSpriteStore((state) => state.generalSpriteSheet)
@@ -31,8 +38,15 @@ export default function Home() {
 
   // console.log('spriteSheetImage', spriteSheetImage)
 
-  if (!spriteSheetImage) return <div>Loading...</div>
-  if (!spriteCharacterImage) return <div>Loading...</div>
+  if (!spriteSheetImage || !spriteCharacterImage) return <LoadingScreen />
 
   return <RenderLevel />
+}
+
+const LoadingScreen = () => {
+  return (
+    <div className="min-h-screen flex flex-col gap-2 justify-center items-center bg-[#273701]">
+      <h1 className="font-pressStart2P text-3xl">Loading...</h1>
+    </div>
+  )
 }
