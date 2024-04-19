@@ -19,6 +19,7 @@ But since we like challenges and learnings, I will try my best to create some co
 ## 🪜 TO DO
 
 - [ ] Start Display Settings with Zustand
+- [ ] Start handling audio
 - [x] Add the collisions in the ground
 - [x] Add the coins in the air
 - [x] Add the canvas with the methods to draw and update
