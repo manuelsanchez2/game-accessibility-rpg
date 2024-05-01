@@ -1,11 +1,12 @@
 import { Howl } from 'howler'
+import { useSettingsAudioStore } from '@/store/use-settings-store'
 
 export const SFX = {
   MOVE: 'MOVE',
 }
 
 const SFX_FILES = {
-  [SFX.MOVE]: './music/move.wav',
+  [SFX.MOVE]: './music/move.mp3',
 }
 
 export class Sounds {
@@ -14,7 +15,7 @@ export class Sounds {
 
   constructor() {
     this.howls = {}
-    this.sfxVolume = 0.5
+    this.sfxVolume = useSettingsAudioStore.getState().volumeEffects
   }
 
   init() {
@@ -35,6 +36,11 @@ export class Sounds {
     // Play it with current volume setting
     howl.volume(this.sfxVolume)
     howl.play()
+  }
+
+  updateVolume() {
+    this.sfxVolume = useSettingsAudioStore.getState().volumeEffects
+    Object.values(this.howls).forEach((howl) => howl.volume(this.sfxVolume))
   }
 }
 

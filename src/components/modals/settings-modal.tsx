@@ -11,6 +11,8 @@ import { useEffect, useRef, useState } from 'react'
 import RangeInput from '../inputs/RangeInput'
 import ColorInput from '../inputs/ColorInput'
 import CheckboxInput from '../inputs/CheckboxInput'
+import musicManager from '@/classes/Music'
+import soundsManager from '@/classes/Sounds'
 
 enum SETTINGS {
   DISPLAY = 'DISPLAY',
@@ -191,6 +193,18 @@ const SettingsAudio = () => {
       setVolumeEffects: state.setVolumeEffects,
     }))
 
+  const handleMusicVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = +e.target.value
+    setVolumeMusic(newVolume)
+    musicManager.updateVolume()
+  }
+
+  const handleSfxVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = +e.target.value
+    setVolumeEffects(newVolume)
+    soundsManager.updateVolume()
+  }
+
   return (
     <>
       <p className="font-pressStart2P mb-4 text-xs text-red-500">
@@ -201,19 +215,23 @@ const SettingsAudio = () => {
         id="volume-music"
         label="Volume Music"
         value={volumeMusic}
-        onChange={(e) => setVolumeMusic(+e.target.value)}
-        min={1}
-        max={100}
-        step={1}
+        onChange={handleMusicVolumeChange}
+        min={0}
+        max={1}
+        minLabel={0}
+        maxLabel={10}
+        step={0.1}
       />
       <RangeInput
         id="sfx-music"
         label="Volume SFX"
         value={volumeEffects}
-        onChange={(e) => setVolumeEffects(+e.target.value)}
-        min={1}
-        max={100}
-        step={1}
+        onChange={handleSfxVolumeChange}
+        min={0}
+        max={1}
+        minLabel={0}
+        maxLabel={10}
+        step={0.1}
       />
     </>
   )

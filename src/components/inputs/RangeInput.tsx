@@ -8,6 +8,8 @@ type RangeInputProps = {
   min?: number
   max?: number
   step?: number
+  minLabel?: number
+  maxLabel?: number
 }
 
 const RangeInput = ({
@@ -18,6 +20,8 @@ const RangeInput = ({
   min = 1,
   max = 5,
   step = 1,
+  minLabel = 1,
+  maxLabel = 5,
 }: RangeInputProps) => (
   <div className="flex items-center justify-between bg-gray-100 gap-3 mb-4 border-pixel p-3 hover:bg-gray-200 focus-within:bg-gray-200">
     <label
@@ -27,7 +31,7 @@ const RangeInput = ({
       {label}
     </label>
     <div className="flex items-center gap-2">
-      <span className="font-pressStart2P">{min}</span>
+      <span className="font-pressStart2P">{minLabel}</span>
       <input
         type="range"
         id={id}
@@ -38,7 +42,7 @@ const RangeInput = ({
         onChange={onChange}
         className="h-2 bg-gray-200 rounded-lg cursor-pointer appearance-none bg-transparent w-[150px]"
       />
-      <span className="font-pressStart2P">{max}</span>
+      <span className="font-pressStart2P">{maxLabel}</span>
     </div>
   </div>
 )

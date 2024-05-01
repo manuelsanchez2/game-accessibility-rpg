@@ -8,9 +8,10 @@ import {
 import { hasReducedMotion } from '@/helpers'
 import { LevelProps } from '@/types'
 
-const CAMERA_SPEED = hasReducedMotion ? 0.01 : 0.03
-const USE_SMOOTH_CAMERA = !hasReducedMotion
+const CAMERA_SPEED = hasReducedMotion ? 0.02 : 0.03
+const USE_SMOOTH_CAMERA = true
 const CAMERA_LOOKAHEAD = 3
+const OFFSET_START = -5
 
 export class Camera {
   level: LevelProps
@@ -22,7 +23,7 @@ export class Camera {
     const [heroX, heroY] = this.level?.heroRef.displayXY()
     this.cameraX = heroX
     this.cameraY = heroY
-    this.transformOffset = -4.5 * CELL_SIZE
+    this.transformOffset = OFFSET_START * CELL_SIZE
   }
 
   get transformX() {

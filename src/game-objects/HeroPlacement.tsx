@@ -8,6 +8,7 @@ import {
 } from '@/constants'
 import { Coordinate } from '@/types'
 import { Collision } from '@/classes/Collision'
+import soundsManager from '@/classes/Sounds'
 
 export class HeroPlacement extends Placement {
   private currentFrameIndex: number = 0
@@ -23,6 +24,7 @@ export class HeroPlacement extends Placement {
     if (this.lastDirection !== direction) {
       this.currentFrameIndex = 0 // Reset the animation if direction changes
       this.lastDirection = direction
+      soundsManager.playSfx('MOVE')
     } else {
       // Increment frame index or reset if it exceeds the number of frames
       this.currentFrameIndex =

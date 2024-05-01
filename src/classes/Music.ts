@@ -1,4 +1,5 @@
 import { Howl } from 'howler'
+import { useSettingsAudioStore } from '@/store/use-settings-store'
 
 export const MUSIC = {
   AMBIENT: 'AMBIENT',
@@ -14,7 +15,7 @@ export class Music {
 
   constructor() {
     this.howls = {}
-    this.musicVolume = 0.5
+    this.musicVolume = useSettingsAudioStore.getState().volumeMusic
   }
 
   init() {
@@ -33,6 +34,11 @@ export class Music {
     // Play it with current volume setting
     howl.volume(this.musicVolume)
     howl.play()
+  }
+
+  updateVolume() {
+    this.musicVolume = useSettingsAudioStore.getState().volumeMusic
+    Object.values(this.howls).forEach((howl) => howl.volume(this.musicVolume))
   }
 }
 
