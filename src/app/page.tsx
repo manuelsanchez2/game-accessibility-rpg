@@ -2,7 +2,12 @@
 
 import { useEffect } from 'react'
 import { useSpriteStore } from '@/store/use-sprite-store'
-import { SPRITE_SHEET_CHARACTER, SPRITE_SHEET_SRC } from '@/constants'
+import {
+  SPRITE_SHEET_CHARACTER,
+  SPRITE_SHEET_SRC,
+  SPRITE_SHEET_NPC,
+  SPRITE_SHEET_INFO_NPC,
+} from '@/constants'
 import RenderLevel from '@/components/level-layout/RenderLevel'
 import musicManager from '@/classes/Music'
 import soundsManager from '@/classes/Sounds'
@@ -17,12 +22,18 @@ export default function Home() {
   const spriteCharacterImage = useSpriteStore(
     (state) => state.characterSpriteSheet
   )
+  const spriteNpcImage = useSpriteStore((state) => state.npcSpriteSheet)
+  const spriteInfoNpcImage = useSpriteStore((state) => state.npcInfoSpriteSheet)
+
   const setGeneralSpriteSheet = useSpriteStore(
     (state) => state.setGeneralSpriteSheet
   )
   const setCharacterSpriteSheet = useSpriteStore(
     (state) => state.setCharacterSpriteSheet
   )
+  const setNpcSpriteSheet = useSpriteStore((state) => state.setNpcSpriteSheet)
+
+  const setInfoSpriteSheet = useSpriteStore((state) => state.setInfoSpriteSheet)
 
   useEffect(() => {
     const image = document.createElement('img')
@@ -36,9 +47,27 @@ export default function Home() {
     image.onload = () => setCharacterSpriteSheet(image)
   }, [setCharacterSpriteSheet])
 
+  useEffect(() => {
+    const image = document.createElement('img')
+    image.src = SPRITE_SHEET_NPC
+    image.onload = () => setNpcSpriteSheet(image)
+  }, [setNpcSpriteSheet])
+
+  useEffect(() => {
+    const image = document.createElement('img')
+    image.src = SPRITE_SHEET_INFO_NPC
+    image.onload = () => setInfoSpriteSheet(image)
+  }, [setInfoSpriteSheet])
+
   // console.log('spriteSheetImage', spriteSheetImage)
 
-  if (!spriteSheetImage || !spriteCharacterImage) return <LoadingScreen />
+  if (
+    !spriteSheetImage ||
+    !spriteCharacterImage ||
+    !spriteNpcImage ||
+    !spriteInfoNpcImage
+  )
+    return <LoadingScreen />
 
   return <RenderLevel />
 }

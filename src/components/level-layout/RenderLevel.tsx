@@ -61,6 +61,7 @@ export default function RenderLevel() {
             }}
           >
             <LevelBackgroundTilesLayer level={level} />
+
             <LevelPlacementsLayer level={level} />
           </div>
         </div>

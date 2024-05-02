@@ -23,10 +23,20 @@ export const SPRITE_SHEET_SRC = '/assets/midgardtiles.png'
  */
 export const SPRITE_SHEET_CHARACTER = '/assets/midgardmascElderHuman1.png'
 
+/**
+ * Path to the default npc sprite sheet
+ */
+export const SPRITE_SHEET_NPC = '/assets/femHuman2v2.png'
+
+/**
+ * Path to the info npc sprite sheet
+ */
+export const SPRITE_SHEET_INFO_NPC = '/assets/top-info.png'
+
 export type ThemeType = (typeof LEVEL_THEMES)[keyof typeof LEVEL_THEMES]
 
 export const PLACEMENT_TYPE_HERO = 'HERO'
-export const PLACEMENT_TYPE_GOAL = 'GOAL'
+export const PLACEMENT_TYPE_NPC = 'NPC'
 
 export const LEVEL_THEMES = {
   GREEN: 'GREEN',

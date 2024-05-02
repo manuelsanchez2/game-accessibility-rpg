@@ -5,21 +5,22 @@ export default function LevelPlacementsLayer({
 }: LevelBackgroundTilesLayerProps) {
   if (!level) return null
 
+  const sortedPlacements = level.placements.sort((a, b) => a.y - b.y)
+
   return (
     <>
-      {level &&
-        level.placements.map((placement: any) => {
-          const [x, y] = placement.displayXY()
-          const style = {
-            transform: `translate3d(${x}px, ${y}px, 0)`,
-          }
+      {sortedPlacements.map((placement: any, index) => {
+        const [x, y] = placement.displayXY()
+        const style = {
+          transform: `translate3d(${x}px, ${y}px, 0)`,
+        }
 
-          return (
-            <div key={placement.id} style={style} className="absolute">
-              {placement.renderComponent()}
-            </div>
-          )
-        })}
+        return (
+          <div key={placement.id} style={style} className="absolute">
+            {placement.renderComponent()}
+          </div>
+        )
+      })}
     </>
   )
 }

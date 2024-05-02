@@ -1,9 +1,17 @@
-import { LEVEL_THEMES, PLACEMENT_TYPE_HERO, ThemeType } from '@/constants'
+import {
+  LEVEL_THEMES,
+  PLACEMENT_TYPE_HERO,
+  PLACEMENT_TYPE_NPC,
+  ThemeType,
+} from '@/constants'
 import { placementFactory } from './PlacementFactory'
 import { GameLoop } from './GameLoop'
 import { DirectionControls } from './DirectionControls'
 import { PlacementProps } from '@/types'
 import { Camera } from './Camera'
+import { Placement } from '@/game-objects/Placement'
+import { HeroPlacement } from '@/game-objects/HeroPlacement'
+import { NPCPlacement } from '@/game-objects/NPCPlacement'
 
 type EmitHandler = (state: any) => void
 
@@ -13,7 +21,7 @@ export class LevelState {
   public theme: ThemeType
   public tilesWidth: number
   public tilesHeight: number
-  public placements: any
+  public placements: any[]
   public gameLoop: GameLoop
   public directionControls: DirectionControls
   public heroRef: any
@@ -50,6 +58,7 @@ export class LevelState {
     // this.tilesHeight = 8
     this.placements = [
       { id: 0, x: 6, y: 4, type: PLACEMENT_TYPE_HERO },
+      { id: 1, x: 10, y: 2, type: PLACEMENT_TYPE_NPC, extra: 'info' },
       // { id: 1, x: 6, y: 5, type: PLACEMENT_TYPE_GOAL },
     ].map((config) => {
       // This here is where we receive the new instance of the placement with the level inside

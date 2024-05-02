@@ -13,6 +13,7 @@ export class Placement {
   x: number
   y: number
   level: LevelProps
+  extra?: string
   travelPixelsPerFrame: number
   movingPixelsRemaining: number
   movingPixelDirection: string
@@ -20,6 +21,7 @@ export class Placement {
   constructor(properties: PlacementProps, level: LevelProps) {
     this.id = properties.id
     this.type = properties.type
+    this.extra = properties.extra
     this.x = properties.x
     this.y = properties.y
     this.level = level
@@ -27,6 +29,16 @@ export class Placement {
     this.travelPixelsPerFrame = 1.5
     this.movingPixelsRemaining = 0
     this.movingPixelDirection = DIRECTION_DOWN
+  }
+
+  /**
+   * @method isSolidForCollider
+   * @description Determines if the placement is solid for a collider
+   * @param {PlacementPropertiesProps} _body - The colliding body
+   * @returns {boolean} Is solid for collider
+   */
+  isSolidForCollider(): boolean {
+    return false
   }
 
   renderComponent() {}
@@ -38,7 +50,7 @@ export class Placement {
    * @description Calculates the display coordinates (x, y)
    * @returns {[number, number]} The display coordinates
    */
-  displayXY() {
+  displayXY(): [number, number] {
     if (this.movingPixelsRemaining > 0) {
       return this.displayMovingXY()
     }
@@ -48,7 +60,7 @@ export class Placement {
     return [x, y]
   }
 
-  displayMovingXY() {
+  displayMovingXY(): [number, number] {
     const x = this.x * CELL_SIZE
     const y = this.y * CELL_SIZE
 

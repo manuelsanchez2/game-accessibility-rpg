@@ -18,9 +18,14 @@ export class HeroPlacement extends Placement {
     if (this.movingPixelsRemaining > 0) {
       return
     }
+    this.movingPixelDirection = direction
 
     if (this.isSolidAtNextPosition(direction)) return
 
+    this.initiateMovement(direction)
+  }
+
+  initiateMovement(direction: DirectionProps) {
     if (this.lastDirection !== direction) {
       this.currentFrameIndex = 0 // Reset the animation if direction changes
       this.lastDirection = direction
@@ -33,7 +38,6 @@ export class HeroPlacement extends Placement {
 
     // Start the move
     this.movingPixelsRemaining = CELL_SIZE
-    this.movingPixelDirection = direction
   }
 
   isSolidAtNextPosition(direction: DirectionProps) {

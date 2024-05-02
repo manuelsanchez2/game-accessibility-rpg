@@ -104,3 +104,22 @@ kbd {
     @apply border-pixel [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-[13px] [&::-webkit-slider-thumb]:w-[7px] [&::-webkit-slider-thumb]:bg-black [&::-webkit-slider-thumb]:rounded-full;
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rpg-bounce {
+    0%,
+    100% {
+      transform: translateY(-7.5%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .motion-safe\:rpg-bounce {
+    animation: rpg-bounce 1s infinite;
+  }
+}

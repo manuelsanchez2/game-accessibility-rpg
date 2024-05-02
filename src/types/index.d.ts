@@ -6,6 +6,8 @@ export type PlacementProps = {
   y: number
   frameCoord?: string
   type?: string
+  name?: string
+  extra?: string
 }
 
 type LevelProps = {

@@ -18,13 +18,12 @@ But since we like challenges and learnings, I will try my best to create some co
 
 ## 🪜 TO DO
 
-- [ ] Start Display Settings with Zustand
-- [ ] Start handling audio
-- [x] Add the collisions in the ground
-- [x] Add the coins in the air
-- [x] Add the canvas with the methods to draw and update
-- [x] Add main UI for the GUI character
-- [x] Add main settings button
+- [ ] Add dialog possibility
+- [ ] Add random sound every now and then with subtitles
+- [ ] Add settings for subtitles
+- [ ] Add letter spacing and line height for dialogues
+- [ ] Add input instructions
+- [ ] Add possibility of changing the inputs
 
 ## Worth mentioning
 

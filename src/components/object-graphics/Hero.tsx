@@ -11,11 +11,11 @@ const Hero = ({ frameCoord }: { frameCoord: Coordinate }) => {
       <div>
         <Sprite frameCoord={TILES.SHADOW} />
       </div>
-      <div className="absolute -left-[8px] -top-[16px]">
+      <div className="absolute z-[100] -left-[8px] -top-[16px]">
         <Sprite
           alternativeSpriteSheetImage={heroSpriteSheet}
           frameCoord={frameCoord}
-          cropWidth={32} // added
+          cropWidth={32} // added`
           cropHeight={32} // added
         />
       </div>
