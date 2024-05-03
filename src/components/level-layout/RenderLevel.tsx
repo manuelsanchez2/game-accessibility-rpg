@@ -6,6 +6,7 @@ import LevelBackgroundTilesLayer from './LevelBackgroundTilesLayer'
 import LevelPlacementsLayer from './LevelPlacementLayer'
 import TopHud from '../hud/TopHud'
 import SettingsModal from '../modals/settings-modal'
+import Dialog from '../dialog/Dialog'
 
 export default function RenderLevel() {
   const [level, setLevel] = useState<LevelProps>(null)
@@ -67,6 +68,7 @@ export default function RenderLevel() {
         </div>
         <TopHud level={level} />
       </div>
+      <Dialog />
       <SettingsModal level={level} />
     </>
   )

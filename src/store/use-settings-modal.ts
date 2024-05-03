@@ -1,4 +1,3 @@
-import { IS_DEBUG_SETTINGS_MODE_ENABLED } from '@/constants'
 import { create } from 'zustand'
 
 type SettingsModalState = {
@@ -8,7 +7,7 @@ type SettingsModalState = {
 }
 
 export const useSettingsModal = create<SettingsModalState>((set) => ({
-  isOpen: IS_DEBUG_SETTINGS_MODE_ENABLED,
+  isOpen: false,
   open: () => set({ isOpen: true }),
   close: () => set({ isOpen: false }),
 }))
