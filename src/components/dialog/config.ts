@@ -3,46 +3,50 @@ export type TextSampleProps = {
   speed: number
   color?: string
   page: number
+  extra?: string
 }
 
 export type RenderedTextProps = {
   renderedString: string
   color?: string
+  extra?: string
 }
 
 export const SPEEDS = {
-  pause: 500,
-  slow: 120,
-  normal: 70,
-  fast: 40,
+  pause: 200,
+  slow: 90,
+  normal: 40,
+  fast: 20,
 }
 
 export const TEXT_SAMPLES = [
   {
-    string: 'Hello, I am a dialog box.',
+    string: 'Hi! I am a simple NPC.',
     speed: SPEEDS.normal,
     page: 1,
   },
   {
-    string: "What's up?",
+    string: 'Look how cool I am, I can change colors!',
     speed: SPEEDS.normal,
-    color: 'text-red-500',
+    extra: 'underline',
+    color: '!text-red-500',
     page: 1,
   },
   {
-    string: 'How are you doing?',
+    string: 'Or even speak a bit faster.',
     speed: SPEEDS.fast,
     page: 1,
   },
   {
-    string: 'I am coming on a new page!',
+    string: 'Or come on a new page!',
     speed: SPEEDS.fast,
     page: 2,
   },
   {
-    string: 'What do you think about this?!',
+    string:
+      'Change the settings by clicking the icon on the top right corner of the screen.',
     speed: SPEEDS.fast,
-    color: 'text-green-500',
+    color: '!text-green-500',
     page: 2,
   },
 ]

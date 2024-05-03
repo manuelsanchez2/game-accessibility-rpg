@@ -8,6 +8,7 @@ export type PlacementProps = {
   type?: string
   name?: string
   extra?: string
+  messages?: TextSampleProps[]
 }
 
 type LevelProps = {

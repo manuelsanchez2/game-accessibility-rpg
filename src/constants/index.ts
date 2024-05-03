@@ -1,7 +1,7 @@
 /**
  * Are we debugging settings?
  */
-export const IS_DEBUG_SETTINGS_MODE_ENABLED = true
+export const IS_DEBUG_SETTINGS_MODE_ENABLED = false
 
 /**
  * Size of the tiles in the game in pixels

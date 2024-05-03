@@ -32,15 +32,15 @@ export function TopHudCharacter({ bgColor }: { bgColor: string }) {
         d="M133 81V96C133 102.075 137.925 107 144 107H468C474.075 107 479 102.075 479 96V81C479 74.9249 474.075 70 468 70H144C137.925 70 133 74.9249 133 81Z"
         fill="#EA0505"
         stroke="#030303"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <path
         d="M133 118V131C133 137.075 137.925 142 144 142H467C473.075 142 478 137.075 478 131V118C478 111.925 473.075 107 467 107H144C137.925 107 133 111.925 133 118Z"
         fill="#3D80A3"
         stroke="#030303"
-        stroke-width="2"
+        strokeWidth="2"
       />
-      <g clip-path="url(#clip0_27_180)">
+      <g clipPath="url(#clip0_27_180)">
         <rect
           x="25.2046"
           y="52.5097"
@@ -64,7 +64,7 @@ export function TopHudCharacter({ bgColor }: { bgColor: string }) {
         height="162.629"
         rx="81.3147"
         stroke="black"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <defs>
         <pattern

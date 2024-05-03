@@ -29,10 +29,16 @@ export const useSettingsAudioStore = create<SettingsAudioStoreProps>()(
 interface SettingsDisplayStoreProps {
   textSize: number
   textColor: string
+  textDialogSize: number
+  textDialogColor: string
   hudColorBg: string
+  dialogColorBg: string
   setTextSize: (size: number) => void
   setTextColor: (color: string) => void
+  setTextDialogSize: (size: number) => void
+  setTextDialogColor: (color: string) => void
   setHudColorBg: (color: string) => void
+  setDialogColorBg: (color: string) => void
   resetDisplaySettings: () => void
 }
 
@@ -42,12 +48,25 @@ export const useSettingsDisplayStore = create<SettingsDisplayStoreProps>()(
       (set) => ({
         textSize: 3,
         textColor: '#fff',
+        textDialogSize: 5,
+        textDialogColor: '#292929',
         hudColorBg: '#FF9A03',
+        dialogColorBg: '#fff',
         setTextSize: (size: number) => set({ textSize: size }),
         setTextColor: (color: string) => set({ textColor: color }),
+        setTextDialogSize: (size: number) => set({ textDialogSize: size }),
+        setTextDialogColor: (color: string) => set({ textDialogColor: color }),
         setHudColorBg: (color: string) => set({ hudColorBg: color }),
+        setDialogColorBg: (color: string) => set({ dialogColorBg: color }),
         resetDisplaySettings: () =>
-          set({ textSize: 3, textColor: '#fff', hudColorBg: '#FF9A03' }),
+          set({
+            textSize: 3,
+            textColor: '#fff',
+            textDialogColor: '#292929',
+            textDialogSize: 5,
+            hudColorBg: '#FF9A03',
+            dialogColorBg: '#fff',
+          }),
       }),
       { name: 'settings-display' }
     )

@@ -1,29 +1,57 @@
 'use client'
 
 import { useDialogModal } from '@/store/use-dialog-modal'
-import React, { useEffect, useRef, useState } from 'react'
-import { RenderedTextProps, TEXT_SAMPLES, TextSampleProps } from './data'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { RenderedTextProps, TextSampleProps } from './config'
 import { DIALOG_NEXT_SVG } from './DialogNextSVG'
+import { events } from '../event-manager/EventManager'
+import { useSettingsDisplayStore } from '@/store/use-settings-store'
 
 const Dialog = () => {
-  const { isOpen, close } = useDialogModal()
+  const { isOpen, close, messages, setMessages } = useDialogModal()
+  const { textDialogSize, textDialogColor, dialogColorBg } =
+    useSettingsDisplayStore((state) => ({
+      textDialogSize: state.textDialogSize,
+      textDialogColor: state.textDialogColor,
+      dialogColorBg: state.dialogColorBg,
+    }))
+
+  const textSizeInRem = useMemo(() => {
+    const rightAmount = 0.15 * textDialogSize + 1.5
+    return `${rightAmount}rem`
+  }, [textDialogSize])
+
   const dialogRef = useRef(null)
   const [currentTexts, setCurrentTexts] = useState<TextSampleProps[]>([])
   const [currentPageIndex, setCurrentPageIndex] = useState(1)
   const [renderedChars, setRenderedChars] = useState<RenderedTextProps[]>([])
   const [isFastForward, setIsFastForward] = useState(false) // Flag to control fast forward
 
-  const textSize = 'text-3xl'
+  useEffect(() => {
+    if (!isOpen) {
+      events.emit('end-dialog', null)
+
+      setCurrentPageIndex(1)
+      setMessages([])
+      setCurrentTexts([])
+      setRenderedChars([])
+    }
+  }, [isOpen])
 
   useEffect(() => {
-    const initialTexts = TEXT_SAMPLES.filter((text) => text.page === 1).map(
-      (text) => ({ ...text, string: text.string + ' ' })
-    )
+    const initialTexts = messages
+      .filter((text) => text.page === 1)
+      .map((text) => ({ ...text, string: text.string + ' ' }))
+
     setCurrentTexts(initialTexts)
     setRenderedChars(
-      initialTexts.map((text) => ({ renderedString: '', color: text.color }))
+      initialTexts.map((text) => ({
+        renderedString: '',
+        color: text.color,
+        extra: text.extra,
+      }))
     )
-  }, [])
+  }, [messages])
 
   useEffect(() => {
     let totalDelay = 0
@@ -71,13 +99,17 @@ const Dialog = () => {
 
   const handleNextPage = () => {
     const nextPageIndex = currentPageIndex + 1
-    const nextPageTexts = TEXT_SAMPLES.filter(
-      (text) => text.page === nextPageIndex
-    ).map((text) => ({ ...text, string: text.string + ' ' }))
+    const nextPageTexts = messages
+      .filter((text) => text.page === nextPageIndex)
+      .map((text) => ({ ...text, string: text.string + ' ' }))
     if (nextPageTexts.length > 0) {
       setCurrentTexts(nextPageTexts)
       setRenderedChars(
-        nextPageTexts.map((text) => ({ ...text, renderedString: '' }))
+        nextPageTexts.map((text) => ({
+          ...text,
+          renderedString: '',
+          color: text.color,
+        }))
       )
       setCurrentPageIndex(nextPageIndex)
     } else {
@@ -89,13 +121,24 @@ const Dialog = () => {
   return (
     <div
       ref={dialogRef}
-      className="bg-white z-[100] h-[250px] w-[90vw] max-w-[1440px] left-1/2 -translate-x-1/2 absolute bottom-4 border-pixel p-8 pr-10"
+      style={{
+        backgroundColor: dialogColorBg,
+      }}
+      className="z-[10] h-[250px] w-[90vw] max-w-[1440px] left-1/2 -translate-x-1/2 absolute bottom-4 border-pixel p-8 pr-10"
     >
+      <div aria-live="polite" className="sr-only">
+        {currentTexts.map((text) => text.string).join(' ')}
+      </div>
       {renderedChars.map((text, index) => (
         <span
-          className={`font-pressStart2P max-w-[90vw] ${textSize} ${
-            text.color || 'text-black'
-          }`}
+          className={`font-pressStart2P max-w-[90vw] ${
+            text.extra ? text.extra : ''
+          } ${text.color}`}
+          style={{
+            fontSize: textSizeInRem,
+            lineHeight: '1.5',
+            color: text.color ? text.color : textDialogColor,
+          }}
           key={index}
         >
           {text.renderedString}
