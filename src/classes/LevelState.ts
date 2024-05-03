@@ -12,6 +12,7 @@ import { Camera } from './Camera'
 import { Placement } from '@/game-objects/Placement'
 import { HeroPlacement } from '@/game-objects/HeroPlacement'
 import { NPCPlacement } from '@/game-objects/NPCPlacement'
+import { TEXT_SAMPLES } from '@/components/dialog/config'
 
 type EmitHandler = (state: any) => void
 
@@ -57,8 +58,15 @@ export class LevelState {
     // this.tilesWidth = 8
     // this.tilesHeight = 8
     this.placements = [
-      { id: 0, x: 6, y: 4, type: PLACEMENT_TYPE_HERO },
-      { id: 1, x: 10, y: 2, type: PLACEMENT_TYPE_NPC, extra: 'info' },
+      { id: 0, x: 9, y: 2, type: PLACEMENT_TYPE_HERO },
+      {
+        id: 1,
+        x: 10,
+        y: 2,
+        type: PLACEMENT_TYPE_NPC,
+        extra: 'info',
+        messages: TEXT_SAMPLES,
+      },
       // { id: 1, x: 6, y: 5, type: PLACEMENT_TYPE_GOAL },
     ].map((config) => {
       // This here is where we receive the new instance of the placement with the level inside

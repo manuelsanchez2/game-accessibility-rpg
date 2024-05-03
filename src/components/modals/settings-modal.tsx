@@ -129,7 +129,7 @@ const SettingsContent = ({
           </nav>
 
           {/* Conditional Rendering  */}
-          <div>
+          <div className="p-2 pr-5 max-h-[250px] overflow-y-auto">
             {settingsShown === SETTINGS.DISPLAY && <SettingsDisplay />}
             {settingsShown === SETTINGS.AUDIO && <SettingsAudio />}
             {settingsShown === SETTINGS.MOTION && <SettingsMotion />}
@@ -144,17 +144,29 @@ const SettingsDisplay = () => {
   const {
     textSize,
     textColor,
+    textDialogSize,
+    textDialogColor,
+    dialogColorBg,
+    setDialogColorBg,
     setTextSize,
     setTextColor,
+    setTextDialogSize,
+    setTextDialogColor,
     hudColorBg,
     setHudColorBg,
   } = useSettingsDisplayStore((state) => ({
     textSize: state.textSize,
     textColor: state.textColor,
+    textDialogSize: state.textDialogSize,
+    textDialogColor: state.textDialogColor,
     setTextSize: state.setTextSize,
     setTextColor: state.setTextColor,
+    setTextDialogSize: state.setTextDialogSize,
+    setTextDialogColor: state.setTextDialogColor,
     hudColorBg: state.hudColorBg,
     setHudColorBg: state.setHudColorBg,
+    dialogColorBg: state.dialogColorBg,
+    setDialogColorBg: state.setDialogColorBg,
   }))
 
   return (
@@ -174,11 +186,33 @@ const SettingsDisplay = () => {
         value={textColor}
         onChange={(e) => setTextColor(e.target.value)}
       />
+      <RangeInput
+        id="text-dialog-size"
+        label="Text Dialog Size"
+        value={textDialogSize}
+        onChange={(e) => setTextDialogSize(+e.target.value)}
+        min={1}
+        max={5}
+        step={1}
+      />
+      <ColorInput
+        id="text-dialog-color"
+        label="Text Dialog Color"
+        value={textDialogColor}
+        onChange={(e) => setTextDialogColor(e.target.value)}
+      />
       <ColorInput
         id="hud-color-bg"
         label="HUD Color BG"
         value={hudColorBg}
         onChange={(e) => setHudColorBg(e.target.value)}
+      />
+      <ColorInput
+        id="dialog-color-bg"
+        label="Dialog Color BG"
+        value={dialogColorBg}
+        onChange={(e) => setDialogColorBg(e.target.value)}
+        extraClasses="mb-0"
       />
     </>
   )
@@ -207,10 +241,6 @@ const SettingsAudio = () => {
 
   return (
     <>
-      <p className="font-pressStart2P mb-4 text-xs text-red-500">
-        This is not working yet, working on it!
-      </p>
-
       <RangeInput
         id="volume-music"
         label="Volume Music"
@@ -247,10 +277,6 @@ const SettingsMotion = () => {
 
   return (
     <>
-      <p className="font-pressStart2P mb-4 text-xs text-red-500">
-        This is not working yet, working on it!
-      </p>
-
       <CheckboxInput
         id="motion-reduced"
         label="Motion Reduced?"

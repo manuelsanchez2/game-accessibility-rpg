@@ -16,9 +16,10 @@ When we create our games, we should make our experiences inclusive for all kinds
 
 But since we like challenges and learnings, I will try my best to create some cool settings so that (almost) everybody will feel comfortable playing a game in the web!
 
-## 🪜 TO DO
+## 🪜 TO DO for May 2024
 
-- [ ] Add dialog possibility
+- [x] Add dialog possibility
+- [x] Add interaction with NPC (change direction, no flags)
 - [ ] Add random sound every now and then with subtitles
 - [ ] Add settings for subtitles
 - [ ] Add letter spacing and line height for dialogues

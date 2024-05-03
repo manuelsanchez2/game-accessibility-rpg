@@ -1,3 +1,4 @@
+import { TextSampleProps } from '@/components/dialog/config'
 import {
   CELL_SIZE,
   DIRECTION_DOWN,
@@ -14,6 +15,7 @@ export class Placement {
   y: number
   level: LevelProps
   extra?: string
+  messages?: TextSampleProps[]
   travelPixelsPerFrame: number
   movingPixelsRemaining: number
   movingPixelDirection: string
@@ -24,11 +26,16 @@ export class Placement {
     this.extra = properties.extra
     this.x = properties.x
     this.y = properties.y
+    this.messages = properties.messages
     this.level = level
 
     this.travelPixelsPerFrame = 1.5
     this.movingPixelsRemaining = 0
     this.movingPixelDirection = DIRECTION_DOWN
+  }
+
+  ready() {
+    // To be overridden
   }
 
   /**

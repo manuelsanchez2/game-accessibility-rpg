@@ -5,10 +5,19 @@ type ColorInputProps = {
   label: string
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  extraClasses?: string
 }
 
-const ColorInput = ({ id, label, value, onChange }: ColorInputProps) => (
-  <div className="flex items-center justify-between bg-gray-100 gap-3 mb-4 border-pixel p-3 hover:bg-gray-200 focus-within:bg-gray-200">
+const ColorInput = ({
+  id,
+  label,
+  value,
+  onChange,
+  extraClasses,
+}: ColorInputProps) => (
+  <div
+    className={`flex items-center justify-between bg-gray-100 gap-3 mb-4 border-pixel p-3 hover:bg-gray-200 focus-within:bg-gray-200" ${extraClasses}`}
+  >
     <label
       htmlFor={id}
       className="block text-xs font-medium text-nowrap font-pressStart2P"
