@@ -5,9 +5,12 @@ import { LevelProps } from '@/types'
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { TopHudCharacter } from './TopHudCharacter'
+import { useDialogModal } from '@/store/use-dialog-modal'
 
 const TopHud = ({ level }: { level: LevelProps }) => {
   const { open } = useSettingsModal()
+  const { isOpen: isDialogOpen } = useDialogModal()
+
   const { isMobile } = useWindowWidth()
   const { textSize, textColor, hudColorBg } = useSettingsDisplayStore(
     (state) => ({
@@ -79,8 +82,13 @@ const TopHud = ({ level }: { level: LevelProps }) => {
       </div>
 
       <button
+        disabled={isDialogOpen}
         onClick={() => handleOpenSettingsModal()}
-        className="bg-white rounded-full p-3 border-pixel transition-transform hover:scale-105 focus:scale-105"
+        className={`${
+          isDialogOpen
+            ? 'pointer-events-none opacity-35'
+            : 'pointer-events-auto'
+        } bg-white rounded-full p-3 border-pixel transition-transform hover:scale-105 focus:scale-105`}
       >
         <TopHudElement
           id="gear"

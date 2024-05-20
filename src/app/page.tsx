@@ -11,6 +11,8 @@ import {
 import RenderLevel from '@/components/level-layout/RenderLevel'
 import musicManager from '@/classes/Music'
 import soundsManager from '@/classes/Sounds'
+import { useSettingsLanguageStore } from '@/store/use-settings-store'
+import { i18nData } from '@/i18n/data'
 
 soundsManager.init()
 musicManager.init()
@@ -18,6 +20,8 @@ musicManager.init()
 musicManager.playMusic('AMBIENT')
 
 export default function Home() {
+  const language = useSettingsLanguageStore((state) => state.language)
+
   const spriteSheetImage = useSpriteStore((state) => state.generalSpriteSheet)
   const spriteCharacterImage = useSpriteStore(
     (state) => state.characterSpriteSheet
@@ -67,15 +71,17 @@ export default function Home() {
     !spriteNpcImage ||
     !spriteInfoNpcImage
   )
-    return <LoadingScreen />
+    return (
+      <LoadingScreen messageLanguage={i18nData[language].GENERAL.LOADING} />
+    )
 
   return <RenderLevel />
 }
 
-const LoadingScreen = () => {
+const LoadingScreen = ({ messageLanguage }: { messageLanguage: string }) => {
   return (
     <div className="min-h-screen flex flex-col gap-2 justify-center items-center bg-[#273701]">
-      <h1 className="font-pressStart2P text-3xl">Loading...</h1>
+      <h1 className="font-pressStart2P text-3xl">{messageLanguage}</h1>
     </div>
   )
 }

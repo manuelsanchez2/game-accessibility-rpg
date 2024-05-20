@@ -1,4 +1,7 @@
 import { GameLoop } from '@/classes/GameLoop'
+import { LanguageProps } from './_index'
+import { TextSampleProps } from '@/components/dialog/config'
+import { TextSamples } from '@/i18n/data'
 
 export type PlacementProps = {
   id: number
@@ -8,7 +11,7 @@ export type PlacementProps = {
   type?: string
   name?: string
   extra?: string
-  messages?: TextSampleProps[]
+  messages?: TextSamples
 }
 
 type LevelProps = {

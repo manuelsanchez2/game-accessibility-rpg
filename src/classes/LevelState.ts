@@ -9,10 +9,7 @@ import { GameLoop } from './GameLoop'
 import { DirectionControls } from './DirectionControls'
 import { PlacementProps } from '@/types'
 import { Camera } from './Camera'
-import { Placement } from '@/game-objects/Placement'
-import { HeroPlacement } from '@/game-objects/HeroPlacement'
-import { NPCPlacement } from '@/game-objects/NPCPlacement'
-import { TEXT_SAMPLES } from '@/components/dialog/config'
+import { TEXT_SAMPLES } from '@/i18n/data'
 
 type EmitHandler = (state: any) => void
 

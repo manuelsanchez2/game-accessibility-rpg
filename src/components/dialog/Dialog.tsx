@@ -1,13 +1,18 @@
 'use client'
 
 import { useDialogModal } from '@/store/use-dialog-modal'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { RenderedTextProps, TextSampleProps } from './config'
-import { DIALOG_NEXT_SVG } from './DialogNextSVG'
 import { events } from '../event-manager/EventManager'
-import { useSettingsDisplayStore } from '@/store/use-settings-store'
+import {
+  useSettingsDisplayStore,
+  useSettingsLanguageStore,
+  useSettingsMotionStore,
+} from '@/store/use-settings-store'
+import { DIALOG_NEXT_SVG } from './DialogNextSVG'
 
 const Dialog = () => {
+  const language = useSettingsLanguageStore((state) => state.language)
   const { isOpen, close, messages, setMessages } = useDialogModal()
   const { textDialogSize, textDialogColor, dialogColorBg } =
     useSettingsDisplayStore((state) => ({
@@ -26,20 +31,25 @@ const Dialog = () => {
   const [currentPageIndex, setCurrentPageIndex] = useState(1)
   const [renderedChars, setRenderedChars] = useState<RenderedTextProps[]>([])
   const [isFastForward, setIsFastForward] = useState(false) // Flag to control fast forward
+  const reducedMotion = useSettingsMotionStore((state) => state.reducedMotion)
 
   useEffect(() => {
     if (!isOpen) {
       events.emit('end-dialog', null)
 
       setCurrentPageIndex(1)
-      setMessages([])
+      setMessages({ en: [], es: [], ru: [], it: [] }) // Ensure valid initial value
       setCurrentTexts([])
       setRenderedChars([])
     }
   }, [isOpen])
 
   useEffect(() => {
-    const initialTexts = messages
+    if (!messages || !messages[language]) return
+
+    let messagesLanguage = messages[language]
+
+    const initialTexts = messagesLanguage
       .filter((text) => text.page === 1)
       .map((text) => ({ ...text, string: text.string + ' ' }))
 
@@ -51,7 +61,7 @@ const Dialog = () => {
         extra: text.extra,
       }))
     )
-  }, [messages])
+  }, [language, messages])
 
   useEffect(() => {
     let totalDelay = 0
@@ -63,6 +73,7 @@ const Dialog = () => {
         setTimeout(() => {
           setRenderedChars((prev) => {
             const newRenderedChars = [...prev]
+            if (!newRenderedChars[textIndex]) return newRenderedChars
             newRenderedChars[textIndex].renderedString += char
             return newRenderedChars
           })
@@ -99,7 +110,7 @@ const Dialog = () => {
 
   const handleNextPage = () => {
     const nextPageIndex = currentPageIndex + 1
-    const nextPageTexts = messages
+    const nextPageTexts = messages[language]
       .filter((text) => text.page === nextPageIndex)
       .map((text) => ({ ...text, string: text.string + ' ' }))
     if (nextPageTexts.length > 0) {
@@ -146,7 +157,12 @@ const Dialog = () => {
       ))}
 
       <button className="absolute right-4 bottom-4" onClick={handleNextPage}>
-        <DIALOG_NEXT_SVG extraClasses="w-12 h-12 motion-safe:rpg-bounce" />
+        <DIALOG_NEXT_SVG
+          extraClasses={`w-12 h-12 ${
+            reducedMotion ? '' : 'motion-safe:rpg-bounce'
+          }
+        `}
+        />
       </button>
     </div>
   )

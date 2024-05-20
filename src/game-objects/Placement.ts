@@ -6,6 +6,7 @@ import {
   DIRECTION_RIGHT,
   DIRECTION_UP,
 } from '@/constants'
+import { TextSamples } from '@/i18n/data'
 import { LevelProps, PlacementProps } from '@/types'
 
 export class Placement {
@@ -15,7 +16,7 @@ export class Placement {
   y: number
   level: LevelProps
   extra?: string
-  messages?: TextSampleProps[]
+  messages?: TextSamples
   travelPixelsPerFrame: number
   movingPixelsRemaining: number
   movingPixelDirection: string

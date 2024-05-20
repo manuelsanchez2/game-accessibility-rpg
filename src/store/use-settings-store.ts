@@ -1,5 +1,24 @@
+import { LanguageProps } from '@/types/_index'
 import { create } from 'zustand'
 import { persist, devtools } from 'zustand/middleware'
+
+// SETTINGS - LANGUAGE
+interface SettingsLanguageStoreProps {
+  language: LanguageProps
+  setLanguage: (language: LanguageProps) => void
+}
+
+export const useSettingsLanguageStore = create<SettingsLanguageStoreProps>()(
+  devtools(
+    persist(
+      (set) => ({
+        language: 'en',
+        setLanguage: (language: LanguageProps) => set({ language: language }),
+      }),
+      { name: 'settings-language' }
+    )
+  )
+)
 
 // SETTINGS - AUDIO (START)
 interface SettingsAudioStoreProps {

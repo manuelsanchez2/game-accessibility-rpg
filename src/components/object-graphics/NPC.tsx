@@ -2,17 +2,17 @@ import React, { useEffect } from 'react'
 import { Sprite } from './Sprite'
 import { TILES } from '@/constants'
 import { useSpriteStore } from '@/store/use-sprite-store'
-import { Coordinate, PlacementProps } from '@/types'
+import { Coordinate } from '@/types'
 import { useSettingsMotionStore } from '@/store/use-settings-store'
 import { useDialogModal } from '@/store/use-dialog-modal'
-import { TextSampleProps } from '../dialog/config'
 import { wait } from '@/helpers'
+import { TextSamples } from '@/i18n/data'
 
 type NPCProps = {
   config?: {
     extra: string | undefined
     type: string | undefined
-    messages: TextSampleProps[] | undefined
+    messages: TextSamples | undefined
     name?: string
     interacting?: boolean
   }
@@ -41,8 +41,35 @@ const NPC = ({ config, frameCoord }: NPCProps) => {
 
   useEffect(() => {
     if (config?.interacting && config?.messages) {
+      const messages: TextSamples = {
+        en: [],
+        es: [],
+        ru: [],
+        it: [],
+      }
+
+      // Type guard to check if messages is of type TextSamples
+      const isTextSamples = (messages: any): messages is TextSamples => {
+        return (
+          messages &&
+          typeof messages === 'object' &&
+          'en' in messages &&
+          'es' in messages &&
+          'ru' in messages &&
+          'it' in messages
+          // Check for other languages if necessary
+        )
+      }
+
+      if (isTextSamples(config.messages)) {
+        messages.en = config.messages.en
+        messages.es = config.messages.es
+        messages.ru = config.messages.ru
+        messages.it = config.messages.it
+      }
+
       wait(100)
-      setMessages(config.messages)
+      setMessages(messages)
 
       wait(100)
       open()

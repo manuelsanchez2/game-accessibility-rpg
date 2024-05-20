@@ -94,3 +94,5 @@ export type MapData = {
   version: string
   width: number
 }
+
+export type LanguageProps = 'en' | 'es' | 'ru' | 'it'

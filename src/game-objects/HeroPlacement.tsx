@@ -31,12 +31,12 @@ export class HeroPlacement extends Placement {
   ready() {
     events.on('start-dialog', null, () => {
       this.toggleMovement(false)
-      console.log('hola')
+      // console.log('start dialog')
     })
 
     events.on('end-dialog', null, () => {
       this.toggleMovement(true)
-      console.log('adios')
+      // console.log('finish dialog')
     })
   }
 

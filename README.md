@@ -20,6 +20,7 @@ But since we like challenges and learnings, I will try my best to create some co
 
 - [x] Add dialog possibility
 - [x] Add interaction with NPC (change direction, no flags)
+- [x] Add basic i18n
 - [ ] Add random sound every now and then with subtitles
 - [ ] Add settings for subtitles
 - [ ] Add letter spacing and line height for dialogues
